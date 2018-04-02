@@ -3,14 +3,10 @@
  *
  * Purpose: general debug system
  *
- * Copyright (C) 2014 wowotech
- * Subject to the GNU Public License, version 2.
  *
- * Created By:         wowo<www.wowotech.net>
- * Created Date:       2014-01-23
+ * Created By:         jeff
+ * Created Date:       2018-04-02
  *
- * ChangeList:
- * Created in 2014-01-23 by wowo;
  */
 
 #ifndef _DEBUG_H_
@@ -55,26 +51,31 @@ do {                                                    \
     while (1);                                          \
 } while (0)
 
-#define ERR(...)                                        \
+#define ERR(format,...)                                        \
 do {                                                    \
     if (debug >= DEBUG_LEVEL_ERR) {                     \
-        PRINT(__VA_ARGS__);                             \
+        PRINT( ""format" File:%s(%d)\n",##__VA_ARGS__, __FILE__, __LINE__);        \
     }                                                   \
 } while (0)
 
-#define INFO(...)                                       \
+#define INFO(format,...)                                       \
 do {                                                    \
     if (debug >= DEBUG_LEVEL_INFO) {                    \
-        PRINT(__VA_ARGS__);                             \
+         PRINT( ""format" File:%s(%d)\n",##__VA_ARGS__, __FILE__, __LINE__);                       \
     }                                                   \
 } while (0)
 
-#define DEBUG(...)                                      \
+#define DEBUG(format,...)                                      \
 do {                                                    \
     if (debug >= DEBUG_LEVEL_DEBUG) {                   \
-        PRINT(__VA_ARGS__);                             \
+         PRINT( ""format" File:%s(%d)\n",##__VA_ARGS__, __FILE__, __LINE__);                             \
     }                                                   \
 } while (0)
+
+#define INFO_MOD(moduleName, format, ...) \
+do{                                  \
+    PRINT( "[%s] "format" File:%s(%d)\n", moduleName, ##__VA_ARGS__, __FILE__, __LINE__);  \
+}while(0) \
 
 #else   /* CONFIG_ENABLE_DEBUG  */
 
@@ -87,3 +88,4 @@ do {                                                    \
 #endif  /* CONFIG_ENABLE_DEBUG  */
 
 #endif  /* _DEBUG_H_ */
+
